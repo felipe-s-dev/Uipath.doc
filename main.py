@@ -26,39 +26,38 @@ def display_annotations(path):
 
 
 def getListOfFiles(dirName):
-    # create a list of file and sub directories 
-    # names in the given directory 
+    # cria uma lista de arquivos e subdiretórios 
+    # nomes no diretório dado 
     listOfFile = os.listdir(dirName)
     allFiles = list()
-    # Iterate over all the entries
+    # Itera sobre todas as entradas
     for entry in listOfFile:
-        # Create full path
+        # Cria um caminho completo
         fullPath = os.path.join(dirName, entry)
-        # If entry is a directory then get the list of files in this directory 
+        # Se a entrada for um diretório, obtenha a lista de arquivos neste diretório 
         if os.path.isdir(fullPath):
             allFiles = allFiles + getListOfFiles(fullPath)
         else:
             allFiles.append(fullPath)
                 
     return allFiles  
-
-#Gives current directory
+# Dá o diretório atual
 basepath=os.getcwd()
 print("Path: "+basepath)
 
 
 dirName =basepath
-# Get the list of all files in directory tree at given path
+# Obtem a lista de todos os arquivos na árvore de diretórios em determinado caminho
 listOfFiles = getListOfFiles(dirName)
 
-# Get the list of all files in directory tree at given path
+# Obtem a lista de todos os arquivos na árvore de diretórios em determinado caminho
 listOfFiles = list()
 for (dirpath, dirnames, filenames) in os.walk(dirName):
     listOfFiles += [os.path.join(dirpath, file) for file in filenames]
     
 
 
-# Print the files 
+# Print os arquivos 
 for elem in listOfFiles:
   print(elem)  
   print("")
@@ -66,22 +65,20 @@ for elem in listOfFiles:
     display_annotations(elem)
   print ("****************") 
 
-
-# Save a reference to the original standard output  
+# Salva uma referência à saída padrão original  
 original_stdout = sys.stdout 
 
-#Write the result in document.txt
+# Escreve o resultado em document.txt
 with open('document.txt', 'w') as f:
-  sys.stdout = f # Change the standard output to the file we created.
-  #print('This message will be written to a file.')
+  sys.stdout = f # Altera a saída padrão para o arquivo que criamos.
+  #print ('Esta mensagem será gravada em um arquivo.')
   for elem in listOfFiles:
     print(elem)  
     print("")
     if elem.endswith(".txt") or elem.endswith(".xaml"):
       display_annotations(elem)
     print ("****************")
-  sys.stdout = original_stdout # Reset the standard output to its original value
-
+  sys.stdout = original_stdout # Redefine a saída padrão para seu valor original
 
 
 
